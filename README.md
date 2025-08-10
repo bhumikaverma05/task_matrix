@@ -40,23 +40,6 @@ Inter: For clean and highly readable body text.
 
 Space Mono: For a tech-inspired, monospace feel in headings and accents.
 
-🚀 Getting Started
-To view and run this website locally, follow these simple steps:
-
-Clone the repository (or download the files):
-If you're using Git:
-
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
-
-(Replace your-username/your-repo-name with your actual GitHub repository details).
-
-Open the files:
-Navigate to the project directory and open index.html in your preferred web browser. The login.html file should be in the same directory.
-
-# Example (if on macOS)
-open index.html
-
 or simply double-click the index.html file.
 
 📂 Project Structure
@@ -68,26 +51,3 @@ or simply double-click the index.html file.
 🤝 Contributing
 We welcome contributions! If you have suggestions for improvements or find any issues, please feel free to:
 
-Fork the repository.
-
-Create a new branch (git checkout -b feature/your-feature-name).
-
-Make your changes.
-
-Commit your changes (git commit -m 'feat: Add new feature').
-
-Push to the branch (git push origin feature/your-feature-name).
-
-Open a Pull Request.
-
-📄 License
-This project is open-source and available under the MIT License.
-
-📞 Contact
-For any inquiries, feel free to reach out to:
-
-Matrix Club Official Email: matrixclub@vitbhopal.ac.in
-
-GitHub Repository: https://github.com/your-username/your-repo-name (Replace with your actual repo link)
-
-Enjoy exploring the Matrix Club website!
