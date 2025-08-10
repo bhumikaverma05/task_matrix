@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Club - VIT Bhopal University</title>
+    <!-- Tailwind CSS CDN for a robust and flexible styling framework -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: 'Inter' for clean body text, 'Space Mono' for a tech/gaming feel in headings -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for the body and HTML for smooth scrolling and consistent typography */
+        body {
+            font-family: 'Inter', sans-serif; /* Primary font for body text */
+            margin: 0;
+            padding: 0;
+            background-color: #0F0F2A; /* Deep dark blue background */
+            color: #E0E0E0; /* Light gray for default text contrast */
+        }
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling for internal links */
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Space Mono', monospace; /* Headings use a monospace font for tech feel */
+            color: #00FFFF; /* Electric Blue for headings */
+        }
+        /* Custom hover effects for interactive cards and elements */
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02); /* Subtle lift and slight scale */
+            box-shadow: 0 15px 30px rgba(255, 0, 255, 0.3); /* Neon Pink-tinted shadow */
+            border-color: #FF00FF; /* Neon Pink highlight border on hover */
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.01); /* Slight lift and scale for buttons */
+            box-shadow: 0 6px 15px rgba(0, 255, 255, 0.4); /* Electric Blue-tinted shadow */
+        }
+        /* Hero Section Background: Abstract tech pattern with a subtle overlay */
+        .hero-section {
+            background-image: url('https://placehold.co/1200x500/0F0F2A/8A2BE2?text=Matrix+Club+Gradient'); /* Dark blue with violet text */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #FF00FF; /* Neon Pink accent border */
+        }
+        /* Overlay for the hero section to improve text readability and add aesthetic */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 42, 0.9) 100%); /* Darker, more intense gradient */
+        }
+        /* Animations for entrance effects */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideInDown {
+            from { transform: translateY(-40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+        .animate-slide-in-up { animation: slideInUp 0.8s ease-out forwards; }
+        .animate-slide-in-down { animation: slideInDown 0.8s ease-out forwards; }
+
+        /* Modal Overlay: Dark and slightly blurred for focus */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px); /* More prominent blur */
+        }
+        /* Modal Content Styling */
+        .modal-content {
+            background-color: #1A1A2E; /* Dark modal background */
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            max-width: 550px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            animation: fadeInScale 0.3s ease-out forwards;
+            border: 2px solid #8A2BE2; /* Violet border */
+            color: #E0E0E0; /* Light text for modal content */
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        /* Close Button for Modals */
+        .modal-close-button {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: #BDBDBD; /* Lighter gray close icon */
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .modal-close-button:hover {
+            color: #00FFFF; /* Electric Blue on hover */
+            transform: rotate(90deg);
+        }
+        /* Testimonial Carousel Styles */
+        .carousel-container {
+            overflow: hidden;
+            width: 100%;
+        }
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body class="bg-dark-blue">
+    <!-- Navigation Bar: Dark, sleek, with subtle accent border -->
+    <nav class="bg-gradient-to-r from-purple-900 to-indigo-950 p-4 shadow-lg sticky top-0 z-50 rounded-b-xl border-b border-indigo-700">
+        <div class="container mx-auto flex justify-between items-center flex-wrap">
+            <a href="#" class="text-white text-3xl font-extrabold tracking-wide rounded-md p-2 hover:text-purple-400 transition duration-300" style="font-family: 'Space Mono', monospace;">
+                MATRIX CLUB <span class="text-xl font-medium block md:inline-block">VIT Bhopal</span>
+            </a>
+
+            <!-- Mobile Menu Button: Simple hamburger icon -->
+            <button id="mobile-menu-button" class="text-gray-400 md:hidden focus:outline-none p-2 rounded-md hover:bg-gray-800 transition duration-300">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+
+            <!-- Navigation Links: Subtle hover effects -->
+            <div id="nav-links" class="hidden md:flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 w-full md:w-auto items-center">
+                <a href="#about" class="text-gray-300 hover:text-purple-400 py-2 px-4 rounded-md transition duration-300 ease-in-out font-medium text-lg">About Us</a>
+                <a href="#events" class="text-gray-300 hover:text-purple-400 py-2 px-4 rounded-md transition duration-300 ease-in-out font-medium text-lg">Events</a>
+                <a href="#alumni" class="text-gray-300 hover:text-purple-400 py-2 px-4 rounded-md transition duration-300 ease-in-out font-medium text-lg">Alumni</a>
+                <a href="#join" class="text-gray-300 hover:text-purple-400 py-2 px-4 rounded-md transition duration-300 ease-in-out font-medium text-lg">Join Us</a>
+                <a href="#contact" class="text-gray-300 hover:text-purple-400 py-2 px-4 rounded-md transition duration-300 ease-in-out font-medium text-lg">Contact</a>
+                <a href="login.html" class="bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white py-2 px-6 rounded-full font-bold text-lg hover:from-pink-600 hover:to-fuchsia-700 transition duration-300 btn-primary shadow-md">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: Dominant visual with a powerful, tech-inspired message -->
+    <header class="hero-section bg-cover bg-center h-[550px] md:h-[700px] flex items-center justify-center text-center rounded-b-3xl mb-20">
+        <div class="hero-overlay flex items-center justify-center p-6">
+            <div class="p-10 rounded-2xl shadow-xl max-w-4xl mx-auto transform transition duration-500 hover:scale-102 border-4 border-electric-blue animate-fade-in" style="background-color: rgba(30, 30, 46, 0.85); box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);">
+                <h1 class="text-electric-blue text-5xl md:text-7xl font-extrabold mb-5 leading-tight animate-slide-in-up" style="text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);">
+                    INNOVATE. INSIGHT. IMPACT.
+                </h1>
+                <p class="text-gray-300 text-xl md:text-3xl font-light leading-relaxed mb-8 animate-slide-in-down delay-200">
+                    Unleash Your Potential at Matrix Club, VIT Bhopal University.
+                </p>
+                <a href="#join" class="inline-block bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 btn-primary animate-slide-in-up delay-400">
+                    Explore Opportunities
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:px-12 md:py-20">
+
+        <!-- About Us Section: Detailed overview of the club's mission and activities at VIT Bhopal -->
+        <section id="about" class="bg-dark-blue-soft p-8 md:p-12 rounded-2xl shadow-md mb-20 transform transition duration-300 hover:shadow-lg animate-fade-in border border-dark-blue-border">
+            <h2 class="text-5xl font-extrabold text-electric-blue mb-8 text-center leading-tight">
+                ABOUT MATRIX CLUB <span class="block text-3xl font-semibold text-vibrant-violet mt-2">VIT Bhopal University</span>
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://placehold.co/700x450/1A1A2E/FF00FF?text=VIT+Bhopal+Campus+View" alt="VIT Bhopal Campus View" class="rounded-xl shadow-md w-full h-auto object-cover transform transition duration-300 hover:scale-102 border-4 border-neon-pink">
+                </div>
+                <div>
+                    <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                        Matrix Club at VIT Bhopal University is the epicenter for student innovation and technological advancement. We are a dynamic student-led organization dedicated to fostering a culture of curiosity, learning, and collaboration among the university's brightest minds. Our focus extends beyond academics, aiming to bridge the gap between theoretical knowledge and practical application.
+                    </p>
+                    <div id="more-about" class="hidden">
+                        <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                            We host a diverse range of activities, including **intensive workshops** on emerging technologies like AI/ML, Blockchain, and IoT, **competitive hackathons** that challenge creativity and problem-solving, **guest lectures** from industry leaders and successful alumni, and **mentorship programs** designed to guide students in their career paths. Our ultimate goal is to empower VIT Bhopal students to become future tech leaders and innovators.
+                        </p>
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            Joining Matrix Club means becoming part of an active ecosystem where ideas flourish, skills are honed, and lifelong connections are forged. We believe in learning by doing, providing hands-on experience that complements your academic journey and prepares you for the real world. Come, be a part of our journey to redefine technological excellence!
+                        </p>
+                    </div>
+                    <button id="read-more-button" class="bg-gradient-to-r from-electric-blue to-cyan-400 hover:from-electric-blue-dark hover:to-cyan-500 text-white font-bold mt-6 py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out btn-primary">
+                        Read More
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section: Highlighted club events with interactive details -->
+        <section id="events" class="bg-dark-blue-soft p-8 md:p-12 rounded-2xl shadow-md mb-20 transform transition duration-300 hover:shadow-lg animate-fade-in delay-200 border border-dark-blue-border">
+            <h2 class="text-5xl font-extrabold text-electric-blue mb-10 text-center leading-tight">UPCOMING EVENTS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Event Card 1 -->
+                <div class="bg-dark-blue-medium p-8 rounded-xl shadow-md card-hover transition duration-300 ease-in-out border border-dark-blue-border flex flex-col justify-between">
+                    <div>
+                        <img src="https://placehold.co/500x300/1A1A2E/00FFFF?text=Hackathon+Event" alt="Inter-College Hackathon" class="rounded-lg mb-5 w-full h-52 object-cover border border-electric-blue">
+                        <h3 class="text-3xl font-semibold text-electric-blue-soft mb-3">INTER-COLLEGE HACKATHON 2024</h3>
+                        <p class="text-gray-400 text-lg mb-4 leading-relaxed">
+                            A 36-hour coding extravaganza challenging teams to build innovative solutions. Open to all universities!
+                        </p>
+                        <p class="text-sm text-gray-500 mb-2"><strong class="font-medium">Date:</strong> October 26-27, 2024</p>
+                        <p class="text-sm text-gray-500 mb-5"><strong class="font-medium">Venue:</strong> VIT Bhopal Auditorium</p>
+                    </div>
+                    <button class="event-details-button mt-4 inline-block bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white py-3 px-6 rounded-full text-lg font-bold shadow-md transition duration-300 btn-primary"
+                            data-title="Inter-College Hackathon 2024"
+                            data-date="October 26-27, 2024"
+                            data-venue="VIT Bhopal University Auditorium"
+                            data-description="Join the most anticipated hackathon of the year! Form your teams, brainstorm groundbreaking ideas, and code your way to victory. This 36-hour event promises intense competition, expert mentorship, and exciting prizes for the top innovators. Network with students from across the country and showcase your talent.">
+                        View Details
+                    </button>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="bg-dark-blue-medium p-8 rounded-xl shadow-md card-hover transition duration-300 ease-in-out border border-dark-blue-border flex flex-col justify-between">
+                    <div>
+                        <img src="https://placehold.co/500x300/1A1A2E/8A2BE2?text=AI+ML+Workshop" alt="AI & ML Bootcamp" class="rounded-lg mb-5 w-full h-52 object-cover border border-vibrant-violet">
+                        <h3 class="text-3xl font-semibold text-vibrant-violet-soft mb-3">AI & MACHINE LEARNING BOOTCAMP</h3>
+                        <p class="text-gray-400 text-lg mb-4 leading-relaxed">
+                            An immersive bootcamp covering fundamentals to advanced applications of AI and ML.
+                        </p>
+                        <p class="text-sm text-gray-500 mb-2"><strong class="font-medium">Date:</strong> November 15-17, 2024</p>
+                        <p class="text-sm text-gray-500 mb-5"><strong class="font-medium">Venue:</strong> Tech Lab Complex, VIT Bhopal</p>
+                    </div>
+                    <button class="event-details-button mt-4 inline-block bg-gradient-to-r from-electric-blue to-cyan-400 hover:from-electric-blue-dark hover:to-cyan-500 text-white py-3 px-6 rounded-full text-lg font-bold shadow-md transition duration-300 btn-primary"
+                            data-title="AI & Machine Learning Bootcamp"
+                            data-date="November 15-17, 2024"
+                            data-venue="Tech Lab Complex, VIT Bhopal University"
+                            data-description="Master the essentials of Artificial Intelligence and Machine Learning in this comprehensive bootcamp. Led by renowned faculty and industry professionals, you'll gain hands-on experience with popular frameworks and solve real-world problems. Perfect for beginners and intermediate learners looking to deepen their understanding.">
+                        View Details
+                    </button>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div class="bg-dark-blue-medium p-8 rounded-xl shadow-md card-hover transition duration-300 ease-in-out border border-dark-blue-border flex flex-col justify-between">
+                    <div>
+                        <img src="https://placehold.co/500x300/1A1A2E/FF00FF?text=Networking+Mixer" alt="Alumni Connect Mixer" class="rounded-lg mb-5 w-full h-52 object-cover border border-neon-pink">
+                        <h3 class="text-3xl font-semibold text-neon-pink-soft mb-3">ALUMNI CONNECT & NETWORKING</h3>
+                        <p class="text-gray-400 text-lg mb-4 leading-relaxed">
+                            Network with successful VIT Bhopal alumni working in leading tech companies and startups.
+                        </p>
+                        <p class="text-sm text-gray-500 mb-2"><strong class="font-medium">Date:</strong> December 5, 2024</p>
+                        <p class="text-sm text-gray-500 mb-5"><strong class="font-medium">Venue:</strong> Grand Conference Hall, VIT Bhopal</p>
+                    </div>
+                    <button class="event-details-button mt-4 inline-block bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white py-3 px-6 rounded-full text-lg font-bold shadow-md transition duration-300 btn-primary"
+                            data-title="Alumni Connect & Networking Mixer"
+                            data-date="December 5, 2024"
+                            data-venue="Grand Conference Hall, VIT Bhopal University"
+                            data-description="An exclusive opportunity to interact with accomplished alumni from VIT Bhopal who are making significant contributions in the tech industry. Gain insights into various career paths, receive valuable advice, and build a strong professional network. Light refreshments will be served.">
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details Modal (Hidden by default) -->
+        <div id="event-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <button class="modal-close-button">&times;</button>
+                <h3 id="modal-event-title" class="text-3xl font-bold text-electric-blue mb-4"></h3>
+                <p class="text-lg text-gray-300 mb-2"><strong class="font-semibold">Date:</strong> <span id="modal-event-date"></span></p>
+                <p class="text-lg text-gray-300 mb-4"><strong class="font-semibold">Venue:</strong> <span id="modal-event-venue"></span></p>
+                <p id="modal-event-description" class="text-md text-gray-400 leading-relaxed mb-6"></p>
+                <a href="#" class="inline-block bg-gradient-to-r from-electric-blue to-cyan-400 hover:from-electric-blue-dark hover:to-cyan-500 text-white py-3 px-8 rounded-full font-bold transition duration-300 btn-primary">Register Now</a>
+            </div>
+        </div>
+
+        <!-- Alumni & Testimonials Section: Showcasing success stories and impact -->
+        <section id="alumni" class="bg-gradient-to-br from-indigo-950 to-purple-900 text-white p-8 md:p-12 rounded-2xl shadow-md mb-20 transform transition duration-300 hover:shadow-lg animate-fade-in delay-400 border border-dark-blue-border">
+            <h2 class="text-5xl font-extrabold text-electric-blue mb-10 text-center leading-tight">
+                OUR ALUMNI SPEAK
+                <span class="block text-3xl font-semibold text-vibrant-violet mt-2">Success Stories from VIT Bhopal</span>
+            </h2>
+            <div class="relative carousel-container max-w-4xl mx-auto">
+                <div class="carousel-wrapper" id="testimonial-carousel">
+                    <!-- Testimonial 1 -->
+                    <div class="carousel-item p-8 bg-dark-blue-medium rounded-xl shadow-md border border-dark-blue-border flex flex-col items-center text-center">
+                        <img src="https://placehold.co/120x120/1A1A2E/00FFFF?text=JD" alt="Alumni John Doe" class="rounded-full w-28 h-28 object-cover mb-4 border-4 border-electric-blue">
+                        <p class="text-xl italic mb-4 leading-relaxed text-gray-300">
+                            "Matrix Club provided me with the perfect platform to transform my theoretical knowledge into practical skills. The hackathons and workshops were invaluable for my career in AI at Google."
+                        </p>
+                        <p class="font-semibold text-lg text-electric-blue-soft">- JOHN DOE, Batch of 2022 (SOFTWARE ENGINEER, GOOGLE)</p>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="carousel-item p-8 bg-dark-blue-medium rounded-xl shadow-md border border-dark-blue-border flex flex-col items-center text-center">
+                        <img src="https://placehold.co/120x120/1A1A2E/8A2BE2?text=JS" alt="Alumni Jane Smith" class="rounded-full w-28 h-28 object-cover mb-4 border-4 border-vibrant-violet">
+                        <p class="text-xl italic mb-4 leading-relaxed text-gray-300">
+                            "The mentorship program at Matrix Club was a game-changer. It helped me navigate my startup journey and connect with amazing industry mentors. Truly grateful for the community."
+                        </p>
+                        <p class="font-semibold text-lg text-vibrant-violet-soft">- JANE SMITH, Batch of 2021 (FOUNDER, TECH INNOVATIONS)</p>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="carousel-item p-8 bg-dark-blue-medium rounded-xl shadow-md border border-dark-blue-border flex flex-col items-center text-center">
+                        <img src="https://placehold.co/120x120/1A1A2E/FF00FF?text=RM" alt="Alumni Robert Miller" class="rounded-full w-28 h-28 object-cover mb-4 border-4 border-neon-pink">
+                        <p class="text-xl italic mb-4 leading-relaxed text-gray-300">
+                            "The technical workshops are top-notch! I learned so much about Web3 and decentralized applications, which directly led to my internship at a leading blockchain firm."
+                        </p>
+                        <p class="font-semibold text-lg text-neon-pink-soft">- ROBERT MILLER, Batch of 2023 (BLOCKCHAIN DEVELOPER, INNOVATE LABS)</p>
+                    </div>
+                </div>
+                <!-- Carousel Navigation Buttons -->
+                <button id="prev-testimonial" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white p-3 rounded-full shadow-lg z-10 -ml-4 btn-primary">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="next-testimonial" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white p-3 rounded-full shadow-lg z-10 -mr-4 btn-primary">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Call to Action: Join Us - Prominent section to encourage new members, with a simple form -->
+        <section id="join" class="bg-gradient-to-br from-indigo-950 to-violet-900 text-white p-8 md:p-12 rounded-2xl shadow-xl text-center mb-20 animate-fade-in delay-600 border border-dark-blue-border">
+            <h2 class="text-5xl font-extrabold text-electric-blue mb-6">READY TO JOIN THE MATRIX?</h2>
+            <p class="text-xl md:text-2xl mb-10 leading-relaxed text-gray-300">
+                Unlock your potential, connect with peers, and shape the future of technology at VIT Bhopal.
+            </p>
+            <form id="join-form" class="max-w-2xl mx-auto bg-dark-blue-medium p-8 rounded-xl shadow-lg border border-dark-blue-border text-gray-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-left text-lg font-semibold mb-2 text-neon-pink-soft">FULL NAME</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name" required
+                               class="w-full p-4 rounded-md bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-electric-blue transition duration-300">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-left text-lg font-semibold mb-2 text-neon-pink-soft">VIT BHOPAL EMAIL</label>
+                        <input type="email" id="email" name="email" placeholder="your.name@vitbhopal.ac.in" required
+                               class="w-full p-4 rounded-md bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-electric-blue transition duration-300">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="course" class="block text-left text-lg font-semibold mb-2 text-neon-pink-soft">COURSE & YEAR</label>
+                    <input type="text" id="course" name="course" placeholder="e.g., B.Tech CSE, 2nd Year" required
+                           class="w-full p-4 rounded-md bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-electric-blue transition duration-300">
+                </div>
+                <div class="mb-8">
+                    <label for="interest" class="block text-left text-lg font-semibold mb-2 text-neon-pink-soft">AREAS OF INTEREST</label>
+                    <textarea id="interest" name="interest" rows="4" placeholder="AI/ML, Web Development, Cyber Security, etc."
+                              class="w-full p-4 rounded-md bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-electric-blue transition duration-300"></textarea>
+                </div>
+                <button type="submit" class="bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 btn-primary">
+                    SUBMIT APPLICATION
+                </button>
+            </form>
+            <!-- Form Submission Success Modal (Hidden by default) -->
+            <div id="success-modal" class="modal-overlay hidden">
+                <div class="modal-content">
+                    <button class="modal-close-button">&times;</button>
+                    <h3 class="text-3xl font-bold text-electric-blue mb-4">APPLICATION SUBMITTED!</h3>
+                    <p class="text-lg text-gray-300 mb-6">Thank you for your interest in Matrix Club. We'll get back to you soon!</p>
+                    <button class="bg-electric-blue-dark hover:bg-electric-blue-extra-dark text-white py-3 px-8 rounded-full font-bold transition duration-300 btn-primary" onclick="document.getElementById('success-modal').classList.add('hidden');">
+                        CLOSE
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section: Provides detailed contact information and social media links -->
+        <section id="contact" class="bg-dark-blue-soft p-8 md:p-12 rounded-2xl shadow-md mb-20 transform transition duration-300 hover:shadow-lg animate-fade-in delay-800 border border-dark-blue-border">
+            <h2 class="text-5xl font-extrabold text-electric-blue mb-8 text-center leading-tight">CONNECT WITH US</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-3xl font-semibold text-vibrant-violet-soft mb-5">GET IN TOUCH DIRECTLY</h3>
+                    <ul class="text-lg text-gray-300 leading-relaxed">
+                        <li class="mb-4 flex items-center">
+                            <svg class="w-7 h-7 mr-3 text-electric-blue-soft flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M.05 3.175A2.99 2.99 0 013 0h18a3 3 0 012.95 3.175L12.001 12 2.95 3.175zM24 12V3a3 3 0 00-3-3H3a3 3 0 00-2.95 3.175L12.001 12 2.95 3.175z"></path><path d="M2.95 3.175A2.99 2.99 0 013 0h18a3 3 0 012.95 3.175L12.001 12 2.95 3.175zM24 12V3a3 3 0 00-3-3H3a3 3 0 00-2.95 3.175L12.001 12 2.95 3.175z" fill-rule="evenodd"></path></svg>
+                            <strong class="font-medium mr-2">Email:</strong> <a href="mailto:matrixclub@vitbhopal.ac.in" class="text-electric-blue-soft hover:underline">matrixclub@vitbhopal.ac.in</a>
+                        </li>
+                        <li class="mb-4 flex items-center">
+                            <svg class="w-7 h-7 mr-3 text-electric-blue-soft flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v16a2 2 0 002 2h16a2 2 0 002-2V4a2 2 0 00-2-2zM8.5 17a.5.5 0 01-.5-.5v-9a.5.5 0 011 0v9a.5.5 0 01-.5.5zM12 17a.5.5 0 01-.5-.5v-9a.5.5 0 011 0v9a.5.5 0 01-.5.5zM15.5 17a.5.5 0 01-.5-.5v-9a.5.5 0 011 0v9a.5.5 0 01-.5.5z"/></svg>
+                            <strong class="font-medium mr-2">Phone:</strong> +91 7560 213234 (VIT Bhopal Admin)
+                        </li>
+                        <li class="mb-4 flex items-start">
+                            <svg class="w-7 h-7 mr-3 text-electric-blue-soft flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a8 8 0 00-8 8c0 5.488 7.324 11.235 7.644 11.528.32.293.708.293 1.028 0C12.676 21.235 20 15.488 20 10a8 8 0 00-8-8zm0 11.5a3.5 3.5 0 110-7 3.5 3.5 0 010 7z"/></svg>
+                            <strong class="font-medium mr-2">Visit Us:</strong> Matrix Club Office, Student Activity Center, VIT Bhopal University
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-semibold text-vibrant-violet-soft mb-5">FOLLOW US ON SOCIAL MEDIA</h3>
+                    <div class="flex space-x-6">
+                        <!-- Facebook Icon (SVG) -->
+                        <a href="#" class="text-neon-pink hover:text-neon-pink-dark transition duration-300 ease-in-out transform hover:scale-110">
+                            <svg class="w-11 h-11" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <!-- Instagram Icon (SVG) -->
+                        <a href="#" class="text-neon-pink hover:text-neon-pink-dark transition duration-300 ease-in-out transform hover:scale-110">
+                            <svg class="w-11 h-11" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.002 3.714.002.979 0 1.632.09 2.18.307.53.208.96.476 1.35.867.39.39.658.82.867 1.35.218.548.307 1.201.307 2.18.001.93.002 1.284.002 3.714s-.001 2.784-.002 3.714c0 .979-.09 1.632-.307 2.18-.208.53-.476.96-.867 1.35-.39.39-.82.658-1.35.867-.548.218-1.201.307-2.18.307-.93 0-1.284.001-3.714.002s-2.784-.001-3.714-.002c-.979 0-1.632-.09-2.18-.307-.53-.208-.96-.476-1.35-.867-.39-.39-.658-.82-.867-1.35-.218-.548-.307-1.201-.307-2.18-.001-.93-.002-1.284-.002-3.714s.001-2.784.002-3.714c0-.979.09-1.632.307-2.18.208-.53.476-.96.867-1.35.39-.39.82-.658 1.35-.867.548-.218 1.201-.307 2.18-.307H12.315zM12 7.15c-2.761 0-5 2.239-5 5s2.239 5 5 5 5-2.239 5-5-2.239-5-5-5z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <!-- LinkedIn Icon (SVG) -->
+                        <a href="#" class="text-neon-pink hover:text-neon-pink-dark transition duration-300 ease-in-out transform hover:scale-110">
+                            <svg class="w-11 h-11" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <!-- GitHub Icon (SVG) -->
+                        <a href="#" class="text-neon-pink hover:text-neon-pink-dark transition duration-300 ease-in-out transform hover:scale-110">
+                            <svg class="w-11 h-11" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.866 8.165 6.84 9.49.5.09.682-.218.682-.483v-1.625c-2.7-.587-3.275-1.294-3.275-1.294-.442-1.123-1.075-1.428-1.075-1.428-.874-.596.066-.584.066-.584.966.069 1.478.992 1.478.992.857 1.474 2.25.99 2.793.757.087-.587.336-.99.612-1.214-2.146-.243-4.39-1.073-4.39-4.796 0-1.056.376-1.922 1.002-2.596-.1-.243-.435-1.23.096-2.564 0 0 .817-.26 2.673 1.02.775-.215 1.6-.322 2.427-.326.827.004 1.652.111 2.427.326 1.856-1.28 2.673-1.02 2.673-1.02.53 1.334.196 2.321.096 2.564.627.674 1.002 1.54 1.002 2.596 0 3.731-2.247 4.549-4.399 4.793.344.296.674.887.674 1.79v2.534c0 .268.18.577.688.483C21.134 20.165 24 16.419 24 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer: Detailed copyright and attribution, tailored for VIT Bhopal -->
+    <footer class="bg-black text-white p-8 text-center rounded-t-2xl shadow-inner-xl border-t-2 border-emerald-500">
+        <p class="text-lg text-gray-400">&copy; 2024 Matrix Club, VIT Bhopal University. All rights reserved.</p>
+        <p class="text-md mt-3 opacity-80 text-gray-500">
+            Fostering Innovation and Leadership in Technology.
+        </p>
+        <div class="flex justify-center space-x-6 mt-6">
+            <a href="#privacy" class="text-gray-400 hover:text-emerald-300 transition duration-300 text-sm">Privacy Policy</a>
+            <span class="text-gray-600 text-sm">|</span>
+            <a href="#terms" class="text-gray-400 hover:text-emerald-300 transition duration-300 text-sm">Terms of Service</a>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button: Visually appealing and functional for long pages -->
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-gradient-to-r from-emerald-500 to-cyan-600 text-white p-4 rounded-full shadow-lg hover:from-emerald-600 hover:to-cyan-700 transition duration-300 ease-in-out z-50 hidden border-2 border-white" style="box-shadow: 0 0 15px rgba(0,255,255,0.7);">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Custom Tailwind CSS colors (add these to your tailwind.config.js if using CLI)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-blue': '#0F0F2A',
+                        'dark-blue-soft': '#1A1A2E',
+                        'dark-blue-medium': '#2B2B4A',
+                        'dark-blue-border': '#3D3D5A',
+                        'electric-blue': '#00FFFF',
+                        'electric-blue-soft': '#66FFFF',
+                        'electric-blue-dark': '#00CCCC',
+                        'electric-blue-extra-dark': '#009999',
+                        'neon-pink': '#FF00FF',
+                        'neon-pink-soft': '#FF66FF',
+                        'neon-pink-dark': '#CC00CC',
+                        'vibrant-violet': '#8A2BE2',
+                        'vibrant-violet-soft': '#B38CD9',
+                    }
+                }
+            }
+        }
+
+        // JavaScript for all interactive elements on the page
+
+        // Mobile Menu Toggle: Controls the visibility of navigation links on small screens
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenuButton.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden'); // Toggles hidden class to show/hide
+            navLinks.classList.toggle('flex');   // Toggles flex for proper layout when visible
+        });
+
+        // "Read More" Toggle for About Us: Expands/collapses additional descriptive text
+        const readMoreButton = document.getElementById('read-more-button');
+        const moreAbout = document.getElementById('more-about');
+
+        readMoreButton.addEventListener('click', () => {
+            if (moreAbout.classList.contains('hidden')) {
+                moreAbout.classList.remove('hidden');
+                moreAbout.classList.add('block'); // Changes display to block
+                readMoreButton.textContent = 'Show Less'; // Updates button text
+            } else {
+                moreAbout.classList.add('hidden');
+                moreAbout.classList.remove('block');
+                readMoreButton.textContent = 'Read More'; // Resets button text
+            }
+        });
+
+        // Scroll to Top Button Functionality: Manages button visibility and smooth scroll action
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+
+        window.addEventListener('scroll', () => {
+            // Button appears when scrolled down 300 pixels
+            if (window.scrollY > 300) {
+                scrollToTopButton.classList.remove('hidden');
+            } else {
+                scrollToTopButton.classList.add('hidden');
+            }
+        });
+
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll to the top of the page
+            });
+        });
+
+        // Smooth Scroll for Internal Navigation Links: Enhances user experience for in-page navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevents default jump behavior
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth' // Smoothly scrolls to the target section
+                });
+
+                // Closes mobile menu after a link is clicked, if it's open
+                if (!navLinks.classList.contains('hidden') && window.innerWidth < 768) {
+                    navLinks.classList.add('hidden');
+                    navLinks.classList.remove('flex');
+                }
+            });
+        });
+
+        // Event Details Modal: Handles opening and closing event detail pop-ups
+        const eventModal = document.getElementById('event-modal');
+        const modalCloseButton = document.querySelector('.modal-close-button');
+        const modalTitle = document.getElementById('modal-event-title');
+        const modalDate = document.getElementById('modal-event-date');
+        const modalVenue = document.getElementById('modal-event-venue');
+        const modalDescription = document.getElementById('modal-event-description');
+        const eventDetailButtons = document.querySelectorAll('.event-details-button');
+
+        // Opens the modal and populates it with event data from the clicked button
+        eventDetailButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                modalTitle.textContent = button.dataset.title;
+                modalDate.textContent = button.dataset.date;
+                modalVenue.textContent = button.dataset.venue;
+                modalDescription.textContent = button.dataset.description;
+                eventModal.classList.remove('hidden');
+            });
+        });
+
+        // Closes the modal when the close button is clicked
+        modalCloseButton.addEventListener('click', () => {
+            eventModal.classList.add('hidden');
+        });
+
+        // Closes the modal if clicked outside the content area
+        eventModal.addEventListener('click', (e) => {
+            if (e.target === eventModal) {
+                eventModal.classList.add('hidden');
+            }
+        });
+
+        // Form Submission Handling: Prevents default submission and shows a success message
+        const joinForm = document.getElementById('join-form');
+        const successModal = document.getElementById('success-modal');
+        const successModalCloseButton = successModal.querySelector('.modal-close-button');
+
+        joinForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent actual form submission for this demo
+            // In a real application, you would send this data to a server here.
+            joinForm.reset(); // Clear the form fields
+            successModal.classList.remove('hidden'); // Show success modal
+        });
+
+        successModalCloseButton.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+        });
+
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                successModal.classList.add('hidden');
+            }
+        });
+
+        // Testimonial Carousel: Manages automatic and manual sliding of testimonials
+        const testimonialCarousel = document.getElementById('testimonial-carousel');
+        const prevTestimonialButton = document.getElementById('prev-testimonial');
+        const nextTestimonialButton = document.getElementById('next-testimonial');
+        const testimonialItems = document.querySelectorAll('.carousel-item');
+        let currentIndex = 0;
+
+        // Function to update the carousel display
+        function updateCarousel() {
+            if (testimonialItems.length === 0) return; // Prevent errors if no testimonials
+            const itemWidth = testimonialItems[0].offsetWidth; // Get the width of one item
+            testimonialCarousel.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+        }
+
+        // Event listener for previous button
+        prevTestimonialButton.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : testimonialItems.length - 1;
+            updateCarousel();
+        });
+
+        // Event listener for next button
+        nextTestimonialButton.addEventListener('click', () => {
+            currentIndex = (currentIndex < testimonialItems.length - 1) ? currentIndex + 1 : 0;
+            updateCarousel();
+        });
+
+        // Automatically advance the carousel every 5 seconds
+        setInterval(() => {
+            if (testimonialItems.length > 1) { // Only auto-slide if more than one testimonial
+                nextTestimonialButton.click();
+            }
+        }, 5000);
+
+        // Update carousel on window resize to maintain responsiveness
+        window.addEventListener('resize', updateCarousel);
+        // Initial call to set the correct position on load
+        updateCarousel();
+
+    </script>
+</body>
+</html>
